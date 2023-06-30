@@ -30,6 +30,7 @@
     <audio id="background-music" src="https://github.com/alexarthouse19/bensinred/raw/main/The%20Ben%20Song.mp3" autoplay loop></audio>
     <script>
         let spawnInterval = 1000;
+        let loopCount = 0;
         function spawnRandom() {
             let randomElement = document.createElement("div");
             randomElement.classList.add("random");
@@ -37,14 +38,28 @@
             randomElement.style.left = Math.random() * window.innerWidth + "px";
             randomElement.style.top = Math.random() * window.innerHeight + "px";
             document.body.appendChild(randomElement);
+            
+            if (loopCount === 0) {
+                randomElement.style.color = "green"; // Change color to complementary color after the first loop
+            } else {
+                randomElement.style.color = getRandomComplementaryColor(); // Change color to a new complementary color with each subsequent loop
+            }
+            
             spawnInterval *= 0.9;  // Decrease the interval by 10% each time
             if (spawnInterval < 10) spawnInterval = 10;  // Minimum interval of 10ms
             setTimeout(spawnRandom, spawnInterval);
         }
+        
+        function getRandomComplementaryColor() {
+            const hue = Math.floor(Math.random() * 360);
+            const complementaryHue = (hue + 180) % 360;
+            return `hsl(${complementaryHue}, 100%, 50%)`;
+        }
+        
         document.getElementById("original").addEventListener('animationend', function() {
+            loopCount++;
             spawnRandom();
         });
     </script>
 </body>
 </html>
-
