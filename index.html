@@ -23,14 +23,12 @@
             font-size: 70px;
             color: red;
         }
-        iframe {
-            display: none;
-        }
     </style>
 </head>
 <body>
     <div id="original" class="scrolling-text">ben</div>
-    <iframe width="0" height="0" src="https://github.com/alexarthouse19/bensinred/blob/main/The%20Ben%20Song.mp3" frameborder="0" allow="autoplay"></iframe>
+    <audio id="background-music" src="https://github.com/alexarthouse19/bensinred/raw/main/The%20Ben%20Song.mp3" loop></audio>
+    <button onclick="playMusic()">Play Music</button>
     <script>
         let spawnInterval = 1000;
         function spawnRandom() {
@@ -47,6 +45,9 @@
         document.getElementById("original").addEventListener('animationend', function() {
             spawnRandom();
         });
+        function playMusic() {
+            document.getElementById("background-music").play();
+        }
     </script>
 </body>
 </html>
