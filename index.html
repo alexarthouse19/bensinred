@@ -44,10 +44,13 @@
     <div class="control-buttons">
         <button onclick="playMusic()">▶</button>
         <button onclick="stopMusic()">⏹</button>
+        <button onclick="resetProgram()">↺</button>
     </div>
     <script>
         let spawnInterval = 1000;
         let loopCount = 0;
+        let spawnedElements = [];
+
         function spawnRandom() {
             let randomElement = document.createElement("div");
             randomElement.classList.add("random");
@@ -64,6 +67,8 @@
             
             spawnInterval *= 0.9;  // Decrease the interval by 10% each time
             if (spawnInterval < 10) spawnInterval = 10;  // Minimum interval of 10ms
+            
+            spawnedElements.push(randomElement);
             setTimeout(spawnRandom, spawnInterval);
         }
         
@@ -80,6 +85,16 @@
         function stopMusic() {
             document.getElementById("background-music").pause();
             document.getElementById("background-music").currentTime = 0;
+        }
+        
+        function resetProgram() {
+            stopMusic();
+            for (let i = 0; i < spawnedElements.length; i++) {
+                document.body.removeChild(spawnedElements[i]);
+            }
+            spawnedElements = [];
+            spawnInterval = 1000;
+            loopCount = 0;
         }
         
         document.getElementById("original").addEventListener('animationend', function() {
