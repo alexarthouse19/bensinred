@@ -23,6 +23,7 @@
             position: absolute;
             font-size: 70px;
             color: red;
+            transition: font-size 0.3s;
         }
         .control-buttons {
             position: absolute;
@@ -50,6 +51,7 @@
         let spawnInterval = 1000;
         let loopCount = 0;
         let spawnedElements = [];
+        let firstBenSize = 70;
 
         function spawnRandom() {
             let randomElement = document.createElement("div");
@@ -60,9 +62,14 @@
             document.body.appendChild(randomElement);
             
             if (loopCount === 0) {
-                randomElement.style.color = "green"; // Change color to complementary color after the first loop
+                randomElement.style.color = "red"; // First "ben" is red
             } else {
-                randomElement.style.color = getRandomComplementaryColor(); // Change color to a new complementary color with each subsequent loop
+                randomElement.style.color = getRandomComplementaryColor(); // Change color to a new complementary color with each spawn
+            }
+
+            if (spawnedElements.length > 0) {
+                firstBenSize += 1; // Increase the size of the first "ben" by 1 pixel for each new spawn
+                spawnedElements[0].style.fontSize = firstBenSize + "px";
             }
             
             spawnInterval *= 0.9;  // Decrease the interval by 10% each time
@@ -95,6 +102,7 @@
             spawnedElements = [];
             spawnInterval = 1000;
             loopCount = 0;
+            firstBenSize = 70;
         }
         
         document.getElementById("original").addEventListener('animationend', function() {
