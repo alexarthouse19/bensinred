@@ -23,11 +23,22 @@
             font-size: 70px;
             color: red;
         }
+        .control-buttons {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 70px;
+        }
     </style>
 </head>
 <body>
     <div id="original" class="scrolling-text">ben</div>
-    <audio id="background-music" src="https://github.com/alexarthouse19/bensinred/raw/main/The%20Ben%20Song.mp3" autoplay loop></audio>
+    <audio id="background-music" src="https://github.com/alexarthouse19/bensinred/raw/main/The%20Ben%20Song.mp3" loop></audio>
+    <div class="control-buttons">
+        <button onclick="playMusic()">▶</button>
+        <button onclick="stopMusic()">⏹</button>
+    </div>
     <script>
         let spawnInterval = 1000;
         let loopCount = 0;
@@ -54,6 +65,15 @@
             const hue = Math.floor(Math.random() * 360);
             const complementaryHue = (hue + 180) % 360;
             return `hsl(${complementaryHue}, 100%, 50%)`;
+        }
+        
+        function playMusic() {
+            document.getElementById("background-music").play();
+        }
+        
+        function stopMusic() {
+            document.getElementById("background-music").pause();
+            document.getElementById("background-music").currentTime = 0;
         }
         
         document.getElementById("original").addEventListener('animationend', function() {
