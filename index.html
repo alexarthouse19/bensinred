@@ -27,8 +27,7 @@
 </head>
 <body>
     <div id="original" class="scrolling-text">ben</div>
-    <audio id="background-music" src="https://github.com/alexarthouse19/bensinred/raw/main/The%20Ben%20Song.mp3" loop></audio>
-    <button onclick="playMusic()">Play Music</button>
+    <audio id="background-music" src="https://github.com/alexarthouse19/bensinred/raw/main/The%20Ben%20Song.mp3" autoplay loop></audio>
     <script>
         let spawnInterval = 1000;
         function spawnRandom() {
@@ -45,9 +44,7 @@
         document.getElementById("original").addEventListener('animationend', function() {
             spawnRandom();
         });
-        function playMusic() {
-            document.getElementById("background-music").play();
-        }
     </script>
 </body>
 </html>
+
