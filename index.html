@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<<!DOCTYPE html>
 <html>
 <head>
     <title>Scrolling Text</title>
@@ -27,8 +27,11 @@
         }
         .control-buttons {
             position: absolute;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
             left: 50%;
-            top: calc(50% + 140px); /* Position buttons slightly below the first "ben" */
+            top: calc(66.67% - 60px); /* Position buttons two-thirds down the screen */
             transform: translateX(-50%);
             z-index: 2; /* Ensure buttons are on a higher level than "ben" */
         }
@@ -36,6 +39,15 @@
             font-size: 120px;
             width: 300px;
             height: 120px;
+            border: none;
+            background-color: #f7f7f7;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .control-buttons button:hover {
+            background-color: #e0e0e0;
         }
     </style>
 </head>
