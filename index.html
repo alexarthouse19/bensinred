@@ -19,10 +19,6 @@
             transform: translate(-50%, -50%);
             z-index: 1; /* Ensure "ben" is on a lower level than buttons */
         }
-        .random-container {
-            position: relative;
-            z-index: 0; /* Lower z-index to be below "ben" */
-        }
         .random {
             position: absolute;
             font-size: 70px;
@@ -57,7 +53,6 @@
 </head>
 <body>
     <div id="original" class="scrolling-text">ben</div>
-    <div class="random-container"></div>
     <audio id="background-music" src="https://github.com/alexarthouse19/bensinred/raw/main/The%20Ben%20Song.mp3" loop></audio>
     <div class="control-buttons">
         <button onclick="playMusic()">▶</button>
@@ -74,49 +69,54 @@
             let randomElement = document.createElement("div");
             randomElement.classList.add("random");
             randomElement.textContent = "ben";
-            randomElement.style.fontSize = firstBenSize + "px";
-            randomElement.style.color = loopCount === 0 ? "red" : getRandomComplementaryColor(); // Change color to a new complementary color with each spawn
+            randomElement.style.left = Math.random() * window.innerWidth + "px";
+            randomElement.style.top = Math.random() * window.innerHeight + "px";
+            document.body.appendChild(randomElement);
+            
+            if (loopCount === 0) {
+                randomElement.style.color = "red"; // First "ben" is red
+            } else {
+                randomElement.style.color = getRandomComplementaryColor(); // Change color to a new complementary color with each spawn
+            }
 
-            const container = document.querySelector(".random-container");
-            container.appendChild(randomElement);
-
-            const containerRect = container.getBoundingClientRect();
-            const randomElementRect = randomElement.getBoundingClientRect();
-            randomElement.style.left = Math.random() * (containerRect.width - randomElementRect.width) + "px";
-            randomElement.style.top = Math.random() * (containerRect.height - randomElementRect.height) + "px";
-
+            if (spawnedElements.length > 0) {
+                firstBenSize += 1; // Increase the size of the first "ben" by 1 pixel for each new spawn
+                spawnedElements[0].style.fontSize = firstBenSize + "px";
+            }
+            
             spawnInterval *= 0.9;  // Decrease the interval by 10% each time
             if (spawnInterval < 10) spawnInterval = 10;  // Minimum interval of 10ms
-
+            
             spawnedElements.push(randomElement);
             setTimeout(spawnRandom, spawnInterval);
         }
-
+        
         function getRandomComplementaryColor() {
             const hue = Math.floor(Math.random() * 360);
             const complementaryHue = (hue + 180) % 360;
             return `hsl(${complementaryHue}, 100%, 50%)`;
         }
-
+        
         function playMusic() {
             document.getElementById("background-music").play();
         }
-
+        
         function stopMusic() {
             document.getElementById("background-music").pause();
             document.getElementById("background-music").currentTime = 0;
         }
-
+        
         function resetProgram() {
             stopMusic();
-            const container = document.querySelector(".random-container");
-            container.innerHTML = "";
+            for (let i = 0; i < spawnedElements.length; i++) {
+                document.body.removeChild(spawnedElements[i]);
+            }
             spawnedElements = [];
             spawnInterval = 1000;
             loopCount = 0;
             firstBenSize = 70;
         }
-
+        
         document.getElementById("original").addEventListener('animationend', function() {
             loopCount++;
             spawnRandom();
@@ -124,4 +124,6 @@
     </script>
 </body>
 </html>
+
+
 
