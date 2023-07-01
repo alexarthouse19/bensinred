@@ -57,9 +57,8 @@
 </head>
 <body>
     <div id="original" class="scrolling-text">ben</div>
-    <div class="random-container">
-        <audio id="background-music" src="https://github.com/alexarthouse19/bensinred/raw/main/The%20Ben%20Song.mp3" loop></audio>
-    </div>
+    <div class="random-container"></div>
+    <audio id="background-music" src="https://github.com/alexarthouse19/bensinred/raw/main/The%20Ben%20Song.mp3" loop></audio>
     <div class="control-buttons">
         <button onclick="playMusic()">▶</button>
         <button onclick="stopMusic()">⏹</button>
@@ -91,18 +90,6 @@
 
             spawnedElements.push(randomElement);
             setTimeout(spawnRandom, spawnInterval);
-
-            // Check if the randomly spawned element exceeds screen boundaries
-            const screenWidth = window.innerWidth;
-            const screenHeight = window.innerHeight;
-            const elementWidth = randomElement.offsetWidth;
-            const elementHeight = randomElement.offsetHeight;
-            const elementLeft = parseFloat(randomElement.style.left);
-            const elementTop = parseFloat(randomElement.style.top);
-
-            if (elementLeft + elementWidth >= screenWidth || elementTop + elementHeight >= screenHeight) {
-                stopSpawn(randomElement);
-            }
         }
 
         function getRandomComplementaryColor() {
@@ -128,14 +115,6 @@
             spawnInterval = 1000;
             loopCount = 0;
             firstBenSize = 70;
-        }
-
-        function stopSpawn(element) {
-            const index = spawnedElements.indexOf(element);
-            if (index > -1) {
-                spawnedElements.splice(index, 1);
-            }
-            element.remove();
         }
 
         document.getElementById("original").addEventListener('animationend', function() {
